@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Quotes</h1>
+    <section style="margin-top: 30px;">
+        <!-- Удален второй заголовок <h2>Quotes</h2> -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Quote</th>
+                    <th>Tags</th>
+                    <th>Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quote in quotes %}
+                <tr>
+                    <td>{{ quote.quote }}</td>
+                    <td>
+                        {% for tag in quote.tags %}
+                            {{ tag }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ quote.author.fullname }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No quotes available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Ссылка на форму добавления цитаты -->
+        <p>
+            <a href="{% url 'quotes_app:add_quote' %}" role="button" class="secondary">Add New Quote</a>
+        </p>
+    </section>
+{% endblock %}
